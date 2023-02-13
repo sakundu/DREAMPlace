@@ -1054,11 +1054,12 @@ row height = %g, site width = %g
         self.node_x[:self.num_movable_nodes] = node_x[:self.num_movable_nodes]
         self.node_y[:self.num_movable_nodes] = node_y[:self.num_movable_nodes]
 
-        # unscale locations
-        node_x, node_y = self.unscale_pl(params.shift_factor, params.scale_factor)
+        if not params.circuit_training_mode:
+            # unscale locations
+            node_x, node_y = self.unscale_pl(params.shift_factor, params.scale_factor)
 
-        # update raw database
-        place_io.PlaceIOFunction.apply(self.rawdb, node_x, node_y)
+            # update raw database
+            place_io.PlaceIOFunction.apply(self.rawdb, node_x, node_y)
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
