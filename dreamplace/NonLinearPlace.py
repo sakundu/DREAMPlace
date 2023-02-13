@@ -308,14 +308,14 @@ class NonLinearPlace(BasicPlace.BasicPlace):
                     else:
                         optimizer.step()
 
-                    logging.info("optimizer step %.3f ms" % ((time.time() - t3) * 1000))
+                    # logging.info("optimizer step %.3f ms" % ((time.time() - t3) * 1000))
 
                     # nesterov has already computed the objective of the next step
                     if optimizer_name.lower() == "nesterov":
                         cur_metric.objective = optimizer.param_groups[0]["obj_k_1"][0].data.clone()
 
                     # actually reports the metric before step
-                    logging.info(cur_metric)
+                    # logging.info(cur_metric)
                     # record the best outer cell overflow
                     if best_metric[0] is None or best_metric[0].overflow[-1] > cur_metric.overflow[-1]:
                         best_metric[0] = cur_metric
@@ -324,7 +324,7 @@ class NonLinearPlace(BasicPlace.BasicPlace):
                         else:
                             best_pos[0].data.copy_(self.pos[0].data)
 
-                    logging.info("full step %.3f ms" % ((time.time() - t0) * 1000))
+                    # logging.info("full step %.3f ms" % ((time.time() - t0) * 1000))
 
                 def check_plateau(x, window=10, threshold=0.001):
                     if len(x) < window:
